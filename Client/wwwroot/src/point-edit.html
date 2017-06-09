@@ -1,0 +1,64 @@
+﻿<link rel="import" href="../lib/paper-input/paper-input.html">
+<link rel="import" href="../lib/paper-button/paper-button.html">
+<link rel="import" href="../lib/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../lib/iron-ajax/iron-ajax.html">
+<dom-module id="point-edit">
+    <style is="custom-style" include="iron-flex">
+        :host {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        paper-input {
+            width: 200px;
+            margin: 5px;
+        }
+
+        paper-button.green {
+            background-color: var(--paper-green-500);
+            color: white;
+        }
+    </style>
+    <template>
+        <div class="layout horizontal">
+            <paper-input label="Latitude" value="{{selectedMarker.latitude}}" readonly></paper-input>
+            <paper-input label="Longitude" value="{{selectedMarker.longitude}}" readonly></paper-input>
+            <paper-input Label="Notes" value="{{selectedMarker.title}}" ></paper-input>
+            <paper-button class="green" on-tap="removePoint">Update point</paper-button>
+        </div>
+        <iron-ajax id="ajax"
+                   content-type="application/json"
+                   method="PUT"
+                   handle-as="json"
+                   on-response="handleResponse">
+        </iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: 'point-edit',
+            behaviors: [
+            ],
+            properties: {
+                selectedMarker: { type: Object, reflectToAttribute: true }
+            },
+            observers: [
+                'selectedMarkerChanged(selectedId)'
+            ],
+            removePoint: function () {
+                var ajax = this.$.ajax;
+                ajax.url = "http://localhost:51589/api/point/" + this.selectedMarker.id;
+                ajax.body = { Notes: this.selectedMarker.title, Latitude: this.selectedMarker.latitude, Longitude: this.selectedMarker.longitude, Id: this.selectedMarker.id };
+                ajax.generateRequest();
+
+            },
+            handleResponse: function (data) {
+                this.repos = data.detail.response;
+                location.reload();
+            },
+            attached: function () {
+
+            }
+        });
+    </script>
+</dom-module>

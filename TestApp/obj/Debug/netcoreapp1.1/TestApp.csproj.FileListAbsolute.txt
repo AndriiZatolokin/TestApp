@@ -1,0 +1,9 @@
+D:\TestApp\TestApp\TestApp\bin\Debug\netcoreapp1.1\TestApp.deps.json
+D:\TestApp\TestApp\TestApp\bin\Debug\netcoreapp1.1\TestApp.runtimeconfig.json
+D:\TestApp\TestApp\TestApp\bin\Debug\netcoreapp1.1\TestApp.runtimeconfig.dev.json
+D:\TestApp\TestApp\TestApp\bin\Debug\netcoreapp1.1\TestApp.dll
+D:\TestApp\TestApp\TestApp\bin\Debug\netcoreapp1.1\TestApp.pdb
+D:\TestApp\TestApp\TestApp\obj\Debug\netcoreapp1.1\TestApp.AssemblyInfo.cs
+D:\TestApp\TestApp\TestApp\obj\Debug\netcoreapp1.1\TestApp.dll
+D:\TestApp\TestApp\TestApp\obj\Debug\netcoreapp1.1\TestApp.pdb
+D:\TestApp\TestApp\TestApp\obj\Debug\netcoreapp1.1\TestApp.csprojResolveAssemblyReference.cache

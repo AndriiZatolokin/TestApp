@@ -1,0 +1,73 @@
+﻿<link rel="import" href="../lib/paper-input/paper-input.html">
+<link rel="import" href="../lib/paper-button/paper-button.html">
+<link rel="import" href="../lib/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../lib/iron-ajax/iron-ajax.html">
+<dom-module id="point-remove">
+    <style is="custom-style" include="iron-flex">
+        :host {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        paper-input {
+            width: 200px;
+            margin: 5px;
+        }
+
+        paper-button.green {
+            background-color: var(--paper-green-500);
+            color: white;
+        }
+    </style>
+    <template>
+        <div class="layout horizontal">
+            <paper-input label="Latitude" value="{{selectedPoint.latitude}}" readonly></paper-input>
+            <paper-input label="Longitude" value="{{selectedPoint.longitude}}" readonly></paper-input>
+            <paper-input Label="Notes" value="{{selectedPoint.notes}}" readonly></paper-input>
+            <paper-button class="green" on-tap="removePoint">Remove point</paper-button>
+        </div>
+        <iron-ajax id="ajax"
+                   content-type="application/json"
+                   method="DELETE"
+                   handle-as="json"
+                   on-response="handleResponse">
+        </iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: 'point-remove',
+            behaviors: [
+            ],
+            properties: {
+                selectedId: { type: Object, reflectToAttribute: true },
+                points: { type: Array, reflectToAttribute: true }
+            },
+            observers: [
+                'selectedMarkerChanged(selectedId)'
+            ],
+            selectedMarkerChanged: function (id) {
+                if (this.points)
+                    for (var i = 0; i < this.points.length; i++) {
+                        var point = this.points[i];
+                        if (point.id === id) {
+                            this.selectedPoint = point;
+                        }
+                    }
+            },
+            removePoint: function () {
+                var ajax = this.$.ajax;
+                ajax.url = "http://localhost:51589/api/point/" + this.selectedId;
+                ajax.generateRequest();
+
+            },
+            handleResponse: function (data) {
+                this.repos = data.detail.response;
+                location.reload();
+            },
+            attached: function () {
+
+            }
+        });
+    </script>
+</dom-module>

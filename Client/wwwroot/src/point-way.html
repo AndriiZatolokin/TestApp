@@ -1,0 +1,81 @@
+﻿<link rel="import" href="../lib/google-map/google-map-directions.html">
+<link rel="import" href="../lib/paper-input/paper-input.html">
+<dom-module id="point-way">
+    <style is="custom-style" include="iron-flex">
+        :host {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        paper-input {
+            width: 200px;
+            margin: 5px;
+        }
+    </style>
+    <template>
+        <google-map-directions id="direction" map="[[map]]"
+                               start-address={{firstPointString}}
+                               end-address={{lastPointString}}
+                               waypoints="[[wayPoints]]"
+                               travel-mode="WALKING"></google-map-directions>
+
+        <paper-input label="Distance" value="[[distance]]" readonly>
+        </paper-input>
+        <iron-ajax id="ajax"
+                   url="http://localhost:51589/api/distance/"
+                   content-type="application/json"
+                   method="GET"
+                   handle-as="json"
+                   on-response="handleResponse">
+        </iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: 'point-way',
+            observers: [
+            ],
+            properties: {
+                map: { type: Object, reflectToAttribute: true },
+                points: { type: Array, reflectToAttribute: true },
+                firstPointString: { type: String },
+                lastPointString: { type: String },
+                wayPoints: { type: Array, value: function () { return []; } }
+            },
+            showWay: function () {
+                if (this.points) {
+                    if (this.points.length > 0) {
+                        this.$.direction.map = null;
+                        var first = this.points[0];
+                        var last = this.points[this.points.length - 1];
+                        this.firstPointString = first.latitude + "," + first.longitude;
+                        this.lastPointString = last.latitude + "," + last.longitude;
+
+                        if (this.points.length > 2) {
+                            var wayPoints = [];
+                            for (var i = 1; i < this.points.length - 1; i++) {
+                                var point = this.points[i];
+                                if (point.longitude != 0 || point.latitude != 0)
+                                    wayPoints.push({ location: point.latitude + "," + point.longitude, stopover: true });
+                            }
+                            this.set('wayPoints', wayPoints);
+                        }
+                        else {
+                            this.wayPoints = [];
+                        }
+                        this.$.ajax.generateRequest();
+                        this.$.direction.map = this.map;
+                    }
+                }
+            },
+            hideWay: function () {
+                this.$.direction.map = null;
+            },
+            handleResponse: function (data) {
+                this.distance = data.detail.response.distance;
+            },
+            attached: function () {
+
+            }
+        });
+    </script>
+</dom-module>
