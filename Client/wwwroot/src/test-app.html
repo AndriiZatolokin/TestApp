@@ -83,13 +83,13 @@
             <app-toolbar>
                 <div main-title>Test App</div>
                 <paper-icon-button icon="communication:location-on" on-tap="userLocation"></paper-icon-button>
-                <paper-icon-button icon="menu"  onclick="drawer.toggle()"></paper-icon-button>
+                <paper-icon-button icon="menu"  on-tap="historyOpen"></paper-icon-button>
             </app-toolbar>
         </app-header>
         <app-drawer-layout class="drawer">
             <app-drawer align="right" id="drawer">
                 <div class="pointHistoryContainer">
-                    <point-history></point-history>
+                    <point-history id="pointHistory"></point-history>
                 </div>
             </app-drawer>
         </app-drawer-layout>
@@ -226,6 +226,10 @@
                 var date = new Date(Date.parse(dateString));
                 return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
             },
+            historyOpen: function () {
+                this.$.drawer.toggle();
+                this.$.pointHistory.updateHistory();
+            }
         });
     </script>
 </dom-module>
