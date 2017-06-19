@@ -3,7 +3,7 @@ D:\TestApp\TestApp\Client\bin\Debug\netcoreapp1.1\Client.runtimeconfig.json
 D:\TestApp\TestApp\Client\bin\Debug\netcoreapp1.1\Client.runtimeconfig.dev.json
 D:\TestApp\TestApp\Client\bin\Debug\netcoreapp1.1\Client.dll
 D:\TestApp\TestApp\Client\bin\Debug\netcoreapp1.1\Client.pdb
-D:\TestApp\TestApp\Client\obj\Debug\netcoreapp1.1\Client.csprojResolveAssemblyReference.cache
 D:\TestApp\TestApp\Client\obj\Debug\netcoreapp1.1\Client.AssemblyInfo.cs
 D:\TestApp\TestApp\Client\obj\Debug\netcoreapp1.1\Client.dll
 D:\TestApp\TestApp\Client\obj\Debug\netcoreapp1.1\Client.pdb
+D:\TestApp\TestApp\Client\obj\Debug\netcoreapp1.1\Client.csprojResolveAssemblyReference.cache

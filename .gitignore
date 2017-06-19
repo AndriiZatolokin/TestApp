@@ -24,3 +24,13 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+TestApp/obj/Debug/netcoreapp1.1/TestApp.pdb
+TestApp/bin/Debug/netcoreapp1.1/TestApp.dll
+TestApp/bin/Debug/netcoreapp1.1/TestApp.pdb
+TestApp/obj/Debug/netcoreapp1.1/CoreCompileInputs.cache
+TestApp/obj/Debug/netcoreapp1.1/TestApp.csproj.FileListAbsolute.txt
+TestApp/obj/Debug/netcoreapp1.1/TestApp.csprojResolveAssemblyReference.cache
+TestApp/obj/Debug/netcoreapp1.1/TestApp.dll
+.vs/TestApp/v15/.suo
+Client/obj/Debug/netcoreapp1.1/Client.csproj.FileListAbsolute.txt
+Telerik.Sitefinity.Samples.Quantum/
