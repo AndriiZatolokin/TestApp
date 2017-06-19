@@ -15,6 +15,7 @@ namespace TestApp.Data
         }
 
         public DbSet<Point> Points { get; set; }
+        public DbSet<PointHistory> PointsHistory { get; set; }
 
     }
 }

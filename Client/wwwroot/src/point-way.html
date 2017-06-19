@@ -19,8 +19,7 @@
                                waypoints="[[wayPoints]]"
                                travel-mode="WALKING"></google-map-directions>
 
-        <paper-input label="Distance" value="[[distance]]" readonly>
-        </paper-input>
+        <paper-input label="Distance" value="[[distance]]" readonly></paper-input>
         <iron-ajax id="ajax"
                    url="http://localhost:51589/api/distance/"
                    content-type="application/json"
@@ -36,7 +35,7 @@
             ],
             properties: {
                 map: { type: Object, reflectToAttribute: true },
-                points: { type: Array, reflectToAttribute: true },
+                points: { type: Array, reflectToAttribute: true, notify:true },
                 firstPointString: { type: String },
                 lastPointString: { type: String },
                 wayPoints: { type: Array, value: function () { return []; } }

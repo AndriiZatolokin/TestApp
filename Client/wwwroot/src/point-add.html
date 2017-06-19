@@ -45,7 +45,8 @@
                 map: { type: Object, reflectToAttribute: true },
                 latitude: { type: Number, reflectToAttribute: true },
                 longitude: { type: Number, reflectToAttribute: true },
-                notes: { type: String }
+                notes: { type: String },
+                points: { type: Array, reflectToAttribute: true, notify: true },
             },
             addPoint: function () {
                 var ajax = this.$.ajax;
@@ -53,8 +54,8 @@
                 ajax.generateRequest();
             },
             handleResponse: function (data) {
-                this.repos = data.detail.response;
-                location.reload();
+                var point = data.detail.response;
+                this.push('points', point);
             },
             attached: function () {
                

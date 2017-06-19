@@ -13,12 +13,12 @@ namespace TestApp.Data
 
         public PointRepository(PointContext context)
         {
-            pointContext = context;
+            pointContext = context ?? throw new ArgumentNullException("PointRepository");
         }
 
         public IEnumerable<Point> GetAll()
         {
-            return pointContext.Points.OrderBy(p=>p.Date);
+            return pointContext.Points.OrderBy(p => p.Date);
         }
 
         public void Add(Point item)
@@ -51,6 +51,7 @@ namespace TestApp.Data
             point.Latitude = item.Latitude;
             point.Longitude = item.Longitude;
             point.Notes = item.Notes;
+            point.Date = DateTime.Now;
             pointContext.Points.Update(point);
             pointContext.SaveChanges();
         }

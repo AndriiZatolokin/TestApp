@@ -14,13 +14,12 @@ namespace TestApp.Controllers
     public class PointController : Controller
     {
         private readonly IPointRepository pointRepository;
+        private readonly IPointHistoryService pointHistoryService;
 
-        public PointController(IPointRepository pointRepository)
+        public PointController(IPointRepository pointRepository, IPointHistoryService pointHistoryService)
         {
-            this.pointRepository = pointRepository;
-
-            if (pointRepository.GetAll().Count() == 0)
-                pointRepository.Add(new Point { Notes = "Hello Dnipro", Latitude= 48.4608931, Longitude= 35.0485662 });
+            this.pointRepository = pointRepository ?? throw new ArgumentNullException();
+            this.pointHistoryService = pointHistoryService ?? throw new ArgumentNullException();
         }
 
         [HttpGet]
@@ -45,6 +44,7 @@ namespace TestApp.Controllers
                 return BadRequest();
 
             pointRepository.Add(item);
+            pointHistoryService.AddHistory(item, PointHistoryType.Create);
             return Json(item);
         }
 
@@ -56,6 +56,7 @@ namespace TestApp.Controllers
                 return BadRequest();
             }
 
+            pointHistoryService.AddHistory(item, PointHistoryType.Edit);
             pointRepository.Update(item);
             return new NoContentResult();
         }
@@ -63,6 +64,7 @@ namespace TestApp.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
+            pointHistoryService.AddHistory(pointRepository.Get(id), PointHistoryType.Delete);
             pointRepository.Remove(id);
             return new NoContentResult();
         }

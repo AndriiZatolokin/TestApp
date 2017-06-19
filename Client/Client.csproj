@@ -16,8 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\src\htmlpage.html" />
     <Content Include="wwwroot\src\point-add.html" />
     <Content Include="wwwroot\src\point-edit.html" />
+    <Content Include="wwwroot\src\point-history.html" />
     <Content Include="wwwroot\src\point-remove.html" />
     <Content Include="wwwroot\src\point-way.html" />
     <Content Include="wwwroot\src\test-app.html" />

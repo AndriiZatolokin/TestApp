@@ -35,10 +35,11 @@ namespace TestApp
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-            services.AddDbContext<PointContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<PointContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Scoped);
             services.AddMvc();
-            services.AddSingleton<IPointRepository, PointRepository>();
-            services.AddSingleton<IDistanceService, DistanceService>();
+            services.AddScoped<IPointRepository, PointRepository>();
+            services.AddScoped<IDistanceService, DistanceService>();
+            services.AddScoped<IPointHistoryService, PointHistoryService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

@@ -41,7 +41,8 @@
             ],
             properties: {
                 selectedId: { type: Object, reflectToAttribute: true },
-                points: { type: Array, reflectToAttribute: true }
+                selectedMarker: { type: Object, reflectToAttribute: true, notify: true },
+                points: { type: Array, reflectToAttribute: true, notify: true },
             },
             observers: [
                 'selectedMarkerChanged(selectedId)'
@@ -62,8 +63,18 @@
 
             },
             handleResponse: function (data) {
-                this.repos = data.detail.response;
-                location.reload();
+                var item = undefined;
+                for (var i = 0; i < this.points.length; i++) {
+                    if (this.points[i].id == this.selectedId) {
+                        item = this.points[i];
+                        break;
+                    }
+                }
+                var index = this.points.indexOf(item);
+                if (index != -1) {
+                    this.splice('points', index, 1, )
+                    this.selectedMarker.map = null;
+                }
             },
             attached: function () {
 

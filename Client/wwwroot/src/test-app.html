@@ -4,11 +4,20 @@
 <link rel="import" href="../lib/paper-tabs/paper-tabs.html">
 <link rel="import" href="../lib/iron-pages/iron-pages.html">
 <link rel="import" href="../lib/paper-button/paper-button.html">
+
 <link rel="import" href="../lib/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../lib/app-layout/app-header/app-header.html">
+<link rel="import" href="../lib/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../lib/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../lib/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../lib/iron-icons/communication-icons.html">
+<link rel="import" href="../lib/iron-icons/iron-icons.html">
 <link rel="import" href="point-add.html">
 <link rel="import" href="point-remove.html">
 <link rel="import" href="point-edit.html">
 <link rel="import" href="point-way.html">
+<link rel="import" href="point-history.html">
 
 
 <dom-module id="test-app">
@@ -17,7 +26,6 @@
             :host {
                 display: block;
             }
-
             google-map {
                 height: 600px;
             }
@@ -29,16 +37,66 @@
                 background-color: var(--paper-green-500);
                 color: white;
             }
-
+            html, body {
+                margin: 0;
+                font-family: 'Roboto', 'Noto', sans-serif;
+                -webkit-font-smoothing: antialiased;
+                background: #f1f1f1;
+                max-height: 368px;
+            }
+            app-toolbar {
+                background-color: #4285f4;
+                color: #fff;
+            }
+            paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+            paper-icon-button + [main-title] {
+                    margin-left: 24px;
+                }
+            app-header {
+                @apply --layout-fixed-top;
+                color: #fff;
+                --app-header-background-rear-layer: {
+                background-color: #ef6c00;
+              };
+           }
+            app-drawer-layout:not([narrow]) [drawer-toggle] {
+                display: none;
+            }
             .content {
                 width: 100%;
             }
+            .map {
+                padding-top: 64px;
+            }
+            .drawer {
+                position: relative;
+                z-index: 2;
+            }
+            .pointHistoryContainer{
+                height: 100%;
+            }
         </style>
 
-        <div class="map">
-            <paper-button class="green" on-tap="userLocation">User location</paper-button>
-            <geo-location latitude="{{userLat}}"
-                          longitude="{{userLng}}"></geo-location>
+        <app-header reveals>
+            <app-toolbar>
+                <div main-title>Test App</div>
+                <paper-icon-button icon="communication:location-on" on-tap="userLocation"></paper-icon-button>
+                <paper-icon-button icon="menu"  onclick="drawer.toggle()"></paper-icon-button>
+            </app-toolbar>
+        </app-header>
+        <app-drawer-layout class="drawer">
+            <app-drawer align="right" id="drawer">
+                <div class="pointHistoryContainer">
+                    <point-history></point-history>
+                </div>
+            </app-drawer>
+        </app-drawer-layout>
+        <div class="content">
+            <div class="map">
+                <geo-location latitude="{{userLat}}"
+                              longitude="{{userLng}}"></geo-location>
                 <google-map id="map" map="{{map}}" latitude="{{mapLat}}" longitude="{{mapLng}}" fit-to-markers>
                     <google-map-marker latitude="{{markerLat}}" longitude="{{markerLng}}"
                                        draggable="true" title="You are here!"
@@ -48,13 +106,12 @@
                                        hidden="[[hideEditMarker]]"></google-map-marker>
                     <template is="dom-repeat" items="[[points]]" as="marker">
                         <google-map-marker latitude="[[marker.latitude]]" longitude="[[marker.longitude]]"
-                                           title="[[marker.notes]]" id="[[marker.id]]"
+                                           title="[[marker.notes]]" id="[[marker.id]]" date="[[marker.date]]"
                                            hidden="[[hideMarker]]"
                                            click-events="true" on-google-map-marker-click="markerClicked">[[marker.notes]]</google-map-marker>
                     </template>
                 </google-map>
-        </div>
-        <div class="content">
+            </div>
             <paper-tabs selected="{{selected}}" align-bottom>
                 <paper-tab>Show all</paper-tab>
                 <paper-tab>Add point</paper-tab>
@@ -74,23 +131,23 @@
                     <template is="dom-repeat" items="[[points]]" as="point">
                         <div class="layout horizontal">
                             <paper-input Label="Notes" value="{{point.notes}}" readonly></paper-input>
-                            <paper-input Label="Date" value="{{point.date}}" readonly></paper-input>
+                            <paper-input Label="Date" value="{{dateFormat(point.date)}}" readonly></paper-input>
                             <paper-input label="Latitude" value="{{point.latitude}}" readonly></paper-input>
                             <paper-input label="Longitude" value="{{point.longitude}}" readonly></paper-input>
                         </div>
                     </template>
                 </div>
                 <div class="page">
-                    <point-add latitude="{{markerLat}}" longitude="{{markerLng}}" map="{{map}}"></point-add>
+                    <point-add latitude="{{markerLat}}" longitude="{{markerLng}}" map="{{map}}" points="{{points}}"></point-add>
                 </div>
                 <div class="page">
                     <point-way id="way" map="{{map}}" points="{{points}}"></point-way>
                 </div>
                 <div class="page">
-                    <point-remove selected-id="[[selectedMarkerId]]" points="[[points]]"></point-remove>
+                    <point-remove selected-id="[[selectedMarkerId]]" points="{{points}}" selected-marker="{{selectedMarker}}"></point-remove>
                 </div>
                 <div class="page">
-                    <point-edit selected-marker="[[selectedMarker]]"></point-edit>
+                    <point-edit selected-marker="[[selectedMarker]]" points="{{points}}"></point-edit>
                 </div>
             </iron-pages>
         </div>
@@ -153,19 +210,22 @@
             },
             getAllResponse: function (data) {
                 this.points = data.detail.response;
-                for (var i = 0; i < this.points.length; i++){
+                for (var i = 0; i < this.points.length; i++) {
                     var item = this.points[i];
                 }
-                this.map.fitToMarkers();
             },
             markerClicked: function (e, detail, sender) {
                 console.log("markerClick");
                 if (this.selectedMarker)
-                this.selectedMarker.animation = null;
+                    this.selectedMarker.animation = null;
                 this.selectedMarker = e.srcElement;
                 this.selectedMarker.animation = "BOUNCE";
                 this.selectedMarkerId = e.srcElement.id;
-            }
+            },
+            dateFormat: function (dateString) {
+                var date = new Date(Date.parse(dateString));
+                return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+            },
         });
     </script>
 </dom-module>

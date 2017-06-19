@@ -44,6 +44,6 @@
     "commit": "b598af8af3a1d340cea27c5d2c2dc15665815468"
   },
   "_source": "https://github.com/GoogleWebComponents/google-map.git",
-  "_target": "^1.2.0",
+  "_target": "1.2.0",
   "_originalSource": "google-map"
 }

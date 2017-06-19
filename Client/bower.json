@@ -3,16 +3,26 @@
   "main": "index.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.9.0",
-    "google-map": "^1.2.0",
-    "geo-location": "^1.0.6",
-    "paper-tabs": "^2.0.0",
-    "iron-pages": "^2.0.0",
-    "paper-input": "^2.0.1"
+    "google-map": "1.2.0",
+    "geo-location": "1.0.6",
+    "paper-tabs": "2.0.0",
+    "iron-pages": "2.0.0",
+    "paper-input": "2.0.1",
+    "paper-app-drawer": "1.0.3",
+    "app-layout": "2.0.0",
+    "paper-item": "2.0.0",
+    "iron-collapse": "2.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "resolutions": {
+    "polymer": "1.9 - 2",
+    "paper-ripple": "^1.0.0",
+    "font-roboto": "^1.0.1",
+    "webcomponentsjs": "^v1.0.0"
   }
 }

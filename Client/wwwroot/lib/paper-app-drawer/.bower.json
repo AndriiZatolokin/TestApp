@@ -1,0 +1,43 @@
+{
+  "name": "paper-app-drawer",
+  "version": "1.0.3",
+  "authors": [
+    "Glenn Vandeuren <VandeurenGlenn@example.com>"
+  ],
+  "description": "An element providing an 'drawer' a la [material design](https://www.google.com/design/spec/material-design).",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "seed"
+  ],
+  "main": "paper-app-drawer.html",
+  "license": "http://BasicElements.github.io/LICENSE.txt",
+  "homepage": "https://github.com/BasicElements/paper-app-drawer/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.0",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^1.0.0",
+    "paper-menu": "PolymerElements/paper-menu#^1.0.0",
+    "paper-item": "PolymerElements/paper-item#^1.0.0",
+    "web-component-tester": "*"
+  },
+  "_release": "1.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.3",
+    "commit": "32cff322e95cf63af643af7becd83a0b5ca3b75b"
+  },
+  "_source": "https://github.com/BasicElements/paper-app-drawer.git",
+  "_target": "1.0.3",
+  "_originalSource": "paper-app-drawer"
+}

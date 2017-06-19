@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using TestApp.Models;
 using TestApp.Data;
+using TestApp.Models;
 
 namespace TestApp.Migrations
 {
@@ -33,6 +33,38 @@ namespace TestApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Points");
+                });
+
+            modelBuilder.Entity("TestApp.Models.PointHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Action");
+
+                    b.Property<DateTime>("ChangedOn");
+
+                    b.Property<DateTime>("NewDate");
+
+                    b.Property<double>("NewLatitude");
+
+                    b.Property<double>("NewLongitude");
+
+                    b.Property<string>("NewNotes");
+
+                    b.Property<DateTime>("OldDate");
+
+                    b.Property<double>("OldLatitude");
+
+                    b.Property<double>("OldLongitude");
+
+                    b.Property<string>("OldNotes");
+
+                    b.Property<Guid>("PointId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PointsHistory");
                 });
         }
     }

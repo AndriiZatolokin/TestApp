@@ -24,7 +24,7 @@
         <div class="layout horizontal">
             <paper-input label="Latitude" value="{{selectedMarker.latitude}}" readonly></paper-input>
             <paper-input label="Longitude" value="{{selectedMarker.longitude}}" readonly></paper-input>
-            <paper-input Label="Notes" value="{{selectedMarker.title}}" ></paper-input>
+            <paper-input Label="Notes" value="{{selectedMarker.title}}"></paper-input>
             <paper-button class="green" on-tap="removePoint">Update point</paper-button>
         </div>
         <iron-ajax id="ajax"
@@ -40,7 +40,8 @@
             behaviors: [
             ],
             properties: {
-                selectedMarker: { type: Object, reflectToAttribute: true }
+                selectedMarker: { type: Object, reflectToAttribute: true },
+                points: { type: Array, reflectToAttribute: true, notify: true },
             },
             observers: [
                 'selectedMarkerChanged(selectedId)'
@@ -53,8 +54,18 @@
 
             },
             handleResponse: function (data) {
-                this.repos = data.detail.response;
-                location.reload();
+                var index = undefined;
+                for (var i = 0; i < this.points.length; i++) {
+                    if (this.points[i].id == this.selectedMarker.id) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index) {
+                    this.set("points." + index + ".latitude", this.selectedMarker.latitude);
+                    this.set("points." + index + ".longitude", this.selectedMarker.longitude);
+                    this.set("points." + index + ".notes", this.selectedMarker.notes);
+                }
             },
             attached: function () {
 
